@@ -41,6 +41,6 @@ template<class P, class T> class vector;
 template<class P, class T> class optional;
 template<class P> class string;
 
-typedef size_t FormatVersion;
+typedef uint32_t FormatVersion;
 
 }//namespace mms

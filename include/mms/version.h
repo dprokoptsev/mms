@@ -82,7 +82,7 @@ public:
 
     Ver combine(Ver lhs, Ver rhs)
     {
-        static const size_t FORMAT_POLYNOMIAL_COEF = 478278233;
+        static const uint32_t FORMAT_POLYNOMIAL_COEF = 478278233;
         return lhs * FORMAT_POLYNOMIAL_COEF + rhs;
     }
 
@@ -94,9 +94,9 @@ public:
     static Ver hash(const char* str)
     {
         // Stolen from boost::hash_combine()
-        size_t h = 0;
+        uint32_t h = 0;
         for (; *str; ++str)
-            h ^= static_cast<size_t>(*str) + 0x9e3779b9 + (h << 6) + (h >> 2);
+            h ^= static_cast<uint32_t>(*str) + 0x9e3779b9 + (h << 6) + (h >> 2);
         return h;
     }
 

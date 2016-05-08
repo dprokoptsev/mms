@@ -35,6 +35,7 @@
 #include "../type_traits.h"
 #include "../version.h"
 
+#include <algorithm>
 #include <vector>
 #include <stdexcept>
 #include <iostream>
@@ -83,7 +84,9 @@ inline bool isAligned(size_t pos, size_t size, size_t alignment = sizeof(void*))
 template<class Writer>
 inline void align(Writer& w, size_t alignment = sizeof(void*))
 {
-    addZeroes(w, (-w.pos()) & (sanitizeAlignment(alignment) - 1));
+    alignment = sanitizeAlignment(alignment);
+    auto zeroes_count = ((w.pos() + alignment - 1) & ~(alignment - 1)) - w.pos();
+    addZeroes(w, zeroes_count);
 }
 
 template<class Writer>
@@ -166,7 +169,7 @@ public:
     
     void addPointee(size_t& pos) { pointees_.push_back(&pos); }
     
-    void adjustPointees(ssize_t diff)
+    void adjustPointees(std::ptrdiff_t diff)
     {
         for (std::vector<size_t*>::iterator i = pointees_.begin(), ie = pointees_.end(); i != ie; ++i)
             **i += diff;

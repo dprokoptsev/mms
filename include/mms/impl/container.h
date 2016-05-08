@@ -61,17 +61,17 @@ public:
     bool isNull() const { return offset_ == 0; }
 
 protected:
-    ssize_t offset_;
+    std::ptrdiff_t offset_;
 
     template<class T>
-    const T* ptr(const ssize_t& offset) const
+    const T* ptr(const std::ptrdiff_t& offset) const
     {
         return reinterpret_cast<const T*>(
             reinterpret_cast<const char*>(&offset) + offset
         );
     }
 
-    ssize_t offset(const void* ptr) const
+    std::ptrdiff_t offset(const void* ptr) const
     {
         return reinterpret_cast<const char*>(ptr) -
                reinterpret_cast<const char*>(this);
